@@ -1,9 +1,9 @@
 // pages/Chat.js
 "use client";
 import { useState } from "react";
-import TextArea from "./components/TextArea";
-import AudioButton from "./components/AudioButton";
-import ProcessedText from "./components/ProcessedText";
+import TextArea from "../components/TextArea";
+import AudioButton from "../components/AudioButton";
+import ProcessedText from "../components/ProcessedText";
 import axios from "axios";
 
 export default function Chat() {

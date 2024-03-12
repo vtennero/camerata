@@ -35,8 +35,9 @@ def convert_audio_to_text():
         with sr.AudioFile(converted_audio_path) as source:
             audio_data = r.record(source)
             text = r.recognize_google(audio_data)
-            processed_text = process_text(text, persona, filename)
-            return jsonify({'status': 'success', 'text': processed_text})
+            processed_text, refined_text = process_text(text, persona, filename)
+            print(refined_text)
+            return jsonify({'status': 'success', 'text': processed_text, 'refined_text': refined_text})
             # return jsonify({'status': 'success', 'text': text})
     except sr.UnknownValueError:
         return jsonify({'status': 'error', 'message': 'Speech recognition could not understand audio'}), 500
@@ -54,9 +55,9 @@ def flask_process_text():
     print(f"Received text from persona: {persona}")
 
     # processed_text = text + " world"
-    processed_text = process_text(text, persona, filename)
-    
-    return jsonify({'processed_text': processed_text})
+    processed_text, refined_text = process_text(text, persona, filename)
+    # return jsonify({'processed_text': processed_text}, {'refined_text': refined_text})
+    return jsonify({'processed_text': processed_text, 'refined_text': refined_text})
 
 if __name__ == '__main__':
     app.run(debug=True)

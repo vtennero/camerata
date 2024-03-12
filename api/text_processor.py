@@ -33,7 +33,7 @@ def print_to_file(filename, user_input, bot_response):
 		file.write(f"{formatted_date} User: {user_input}\n")
 		file.write(f"{formatted_date} Bot: {bot_response}\n")
 
-def process_text(user_input, persona, filename):
+def gen_long_text(user_input, persona, filename):
 	"""Function to process text input based on persona."""
 	# Check if the chosen persona exists in the personas dictionary
 	if persona not in personas:
@@ -54,13 +54,28 @@ def process_text(user_input, persona, filename):
 	
 	return response_text
 
-def main(text, persona):
-	# Example usage of process_text
-	response_text = process_text(text, persona)
-	if response_text is not None:
-		print(f"Response: {response_text}")
-	else:
-		print("No response generated.")
+def refiner(response_text):
+	"""Function to refine the response text to make it shorter."""
+	refine_prompt = "Make this text shorter, more informal, like you are actively speaking with this person: " + response_text
+	# refine_prompt = "Summarize this text in 4 sentences max, ideally 1; without prepended text, make it feel more natural like an active dialogue reply to me:  " + response_text
+	refined_response = conversation.run(refine_prompt)
+	return refined_response
 
-# You can test the functionality by calling main function
-# main("This is my day...", "therapist")
+# def main(text, persona):
+#     # Example usage of process_text
+#     response_text = process_text(text, persona, personas[persona]['filename'])
+#     if response_text is not None:
+#         refined_response = refiner(response_text)
+#         print(f"Original Response: {response_text}")
+#         print(f"Refined Response: {refined_response}")
+#     else:
+#         print("No response generated.")
+
+def process_text(user_input, persona, filename):
+	print(f"Received text from persona: {persona} and user input: {user_input}")
+	response_text = gen_long_text(user_input, persona, filename)
+	if response_text is not None:
+		refined_response = refiner(response_text)
+		print(f"Original Response: {response_text}")
+		print(f"Refined Response: {refined_response}")
+	return response_text, refined_response

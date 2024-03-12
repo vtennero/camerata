@@ -1,13 +1,15 @@
 // pages/Chat.js
 "use client";
 import { useEffect, useState } from "react";
-import TextArea from "./components/TextArea";
-import AudioButton from "./components/AudioButton";
-import ProcessedText from "./components/ProcessedText";
+import TextArea from "../components/TextArea";
+import AudioButton from "../components/AudioButton";
+import ProcessedText from "../components/ProcessedText";
 import axios from "axios";
+import useTextToSpeech from "./useTextToSpeech";
 
 export default function Chat() {
   const [processedText, setProcessedText] = useState("");
+  const [refinedText, setRefinedText] = useState("");
   const [filename, setFilename] = useState("");
 
   useEffect(() => {
@@ -32,32 +34,39 @@ export default function Chat() {
     return num.toString().padStart(2, "0");
   };
 
-  const handleAudioProcessed = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      setProcessedText(response.data.processed_text);
-    } catch (error) {
-      console.error("Error processing text:", error);
-    }
+  const handleProcessedText = (text) => {
+    console.log("Updating processed text with:", text);
+    setProcessedText(text);
   };
+
+  // This function is called by child components to update refined text
+  const handleRefinedText = (text) => {
+    console.log("Updating refined text with:", text);
+    setRefinedText(text);
+  };
+
+  useTextToSpeech(refinedText);
 
   return (
     <div>
       {filename && (
         <>
           <TextArea
-            onProcessedText={setProcessedText}
+            onProcessedText={handleProcessedText}
+            onRefinedText={handleRefinedText}
             persona="therapist"
             filename={filename}
           />
           <AudioButton
-            onProcessedText={setProcessedText}
+            onProcessedText={handleProcessedText}
+            onRefinedText={handleRefinedText}
             persona="therapist"
             filename={filename}
           />
-          <ProcessedText processedText={processedText} />
+          <ProcessedText
+            processedText={processedText}
+            refinedText={refinedText}
+          />
         </>
       )}
     </div>

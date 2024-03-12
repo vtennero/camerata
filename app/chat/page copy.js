@@ -1,8 +1,8 @@
 // pages/Chat.js
 "use client";
 import { useState } from "react";
-import TextArea from "./components/TextArea";
-import AudioButton from "./components/AudioButton";
+import TextArea from "../components/TextArea";
+import AudioButton from "../components/AudioButton";
 
 export default function Chat() {
   const [input, setInput] = useState("");

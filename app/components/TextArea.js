@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const TextArea = ({ onProcessedText, persona, filename }) => {
+const TextArea = ({ onProcessedText, onRefinedText, persona, filename }) => {
   const [input, setInput] = useState("");
 
   const handleTextChange = (event) => {
@@ -16,7 +16,11 @@ const TextArea = ({ onProcessedText, persona, filename }) => {
         persona: persona, // The persona passed as a prop
         filename: filename,
       });
+      console.log("Full response data:", response.data); // Add this line
       onProcessedText(response.data.processed_text); // Call the callback function with the processed text
+      console.log("Processed text received:", response.data.processed_text);
+      onRefinedText(response.data.refined_text);
+      console.log("Refined text received:", response.data.refined_text);
     } catch (error) {
       console.error("Error processing text:", error);
     }
