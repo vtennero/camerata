@@ -1,0 +1,38 @@
+// // ChatArea.jsx
+// export function ChatArea({ processedText, refinedText }) {
+//   return (
+//     <div className="flex-1 flex flex-col">
+//       <div className="grid h-[100%] items-end p-4 gap-4">
+//         <div className="flex items-center justify-end rounded-xl bg-gray-100 p-4 dark:bg-gray-800">
+//           <div className="grid gap-1 text-sm">
+//             <p>{processedText}</p>
+//             {/* <p>{refinedText}</p> */}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// ChatArea.jsx
+export function ChatArea({ processedText, refinedText }) {
+  return (
+    <div className="flex flex-col h-full">
+      <div className="flex-1 overflow-y-auto p-4">
+        {/* Your chat messages go here */}
+        <div className="grid h-[100%] items-end p-4 gap-4">
+          <div className="flex items-center justify-end rounded-xl bg-gray-200 p-4 dark:bg-gray-800">
+            <div className="grid gap-1 text-sm">
+              <p>{processedText}</p>
+            </div>
+          </div>
+          <div className="flex items-center justify-end rounded-xl bg-gray-200 p-4 dark:bg-gray-800">
+            <div className="grid gap-1 text-sm">
+              <p>{processedText}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
