@@ -14,7 +14,28 @@ import MobileAdvisorBanner from "../ui/MobileAdvisorBanner";
 export function Boss() {
   const [processedText, setProcessedText] = useState("");
   const [refinedText, setRefinedText] = useState("");
+  const [submittedText, setSubmittedText] = useState("");
   const [filename, setFilename] = useState("");
+
+  useEffect(() => {
+    if (refinedText) {
+      // Assume you have an endpoint /generate-audio that accepts POST requests
+      // and returns a URL to the generated audio file.
+      fetch("http://localhost:5000/generate-audio", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: refinedText }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const audio = new Audio(data.audioUrl); // Assuming data.audioUrl is the URL to the audio file
+          audio.play();
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  }, [refinedText]); // This effect depends on `refinedText`
 
   useEffect(() => {
     generateFilename();
@@ -49,67 +70,24 @@ export function Boss() {
     setRefinedText(text);
   };
 
+  const handleFormSubmit = (textInput) => {
+    console.log("Form submitted with text:", textInput);
+    setSubmittedText(textInput); // Update the state with the submitted text
+  };
+
   // useTextToSpeech(refinedText);
 
-  //   return (
-  //     <div>
-  //       <Navbar />
-  //       <MobileAdvisorBanner />
-  //       <div key="1" className="flex flex-col h-screen w-full ">
-  //         <div className="flex-1 ">
-  //           <div className="flex h-[60vh] items-stretch">
-  //             <div className="hidden md:flex w-[400px]">
-  //               <div className="flex flex-col h-screen w-full ">
-  //                 <div className="flex-1">
-  //                   <div className="flex h-[30vh] items-stretch">
-  //                     <div className="hidden md:flex w-[400px] ">
-  //                       <div className="grid w-full grid-rows-[1fr]">
-  //                         <div className="flex h-12 items-center p-4 " />
-  //                         <div className="flex items-center justify-center p-4">
-  //                           <Avatar className="w-32 h-32 border rounded-none">
-  //                             <AvatarImage alt="Support Agent" src="atlas.jpg" />
-  //                             <AvatarFallback>SA</AvatarFallback>
-  //                           </Avatar>
-  //                         </div>
-  //                         <div className="text-center text-sm mt-2">
-  //                           Support Agent
-  //                         </div>
-  //                       </div>
-  //                     </div>
-  //                     <div className="flex-1 flex flex-col" />
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             </div>
-  //             <div className="flex-1 flex flex-col">
-  //               <ChatArea
-  //                 processedText={processedText}
-  //                 refinedText={refinedText}
-  //               />
-  //               <div className="flex gap-2 p-4">
-  //                 <MessageInput
-  //                   onProcessedText={handleProcessedText}
-  //                   onRefinedText={handleRefinedText}
-  //                   persona="therapist"
-  //                   filename={filename}
-  //                 />
-
-  //                 <MicrophoneInput />
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
       <MobileAdvisorBanner />
       <div key="1" className="flex flex-col flex-1">
         <div className="flex-1 overflow-y-auto">
-          <ChatArea processedText={processedText} refinedText={refinedText} />
+          <ChatArea
+            processedText={processedText}
+            refinedText={refinedText}
+            submittedText={submittedText} // Pass the submitted text as a prop
+          />
         </div>
         <div className="p-4 flex gap-2 items-center">
           <MessageInput
@@ -117,8 +95,15 @@ export function Boss() {
             onRefinedText={handleRefinedText}
             persona="therapist"
             filename={filename}
+            onFormSubmit={handleFormSubmit} // Pass the function as a prop
           />
-          <MicrophoneInput />
+          <MicrophoneInput
+            onProcessedText={handleProcessedText}
+            onRefinedText={handleRefinedText}
+            persona="therapist"
+            filename={filename}
+            onFormSubmit={handleFormSubmit} // Pass the function as a prop
+          />
         </div>
       </div>
     </div>

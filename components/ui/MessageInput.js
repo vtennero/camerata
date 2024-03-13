@@ -8,12 +8,14 @@ export function MessageInput({
   onRefinedText,
   persona,
   filename,
+  onFormSubmit,
 }) {
   const [input, setInput] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
     await handleSendText(); // Call the function to handle sending the message
+    onFormSubmit(input); // Assuming the text you want to send back is the current input state
   };
 
   const handleTextChange = (event) => {
@@ -37,19 +39,6 @@ export function MessageInput({
       console.error("Error processing text:", error);
     }
   };
-
-  //   return (
-  //     <form className="flex w-full gap-2" onSubmit={handleSubmit}>
-  //       <Input
-  //         className="flex-1 min-h-[40px]"
-  //         value={input}
-  //         onChange={handleTextChange}
-  //         placeholder="Type a message..."
-  //       />
-  //       <Button type="submit">Send</Button>
-  //     </form>
-  //   );
-  // }
 
   // MessageInput.jsx
   return (
