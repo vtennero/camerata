@@ -11,7 +11,7 @@ import Navbar from "@/app/components/Navbar";
 import { useEffect, useState } from "react";
 import MobileAdvisorBanner from "../ui/MobileAdvisorBanner";
 
-export function Boss() {
+export function Boss({ persona }) {
   const [processedText, setProcessedText] = useState("");
   const [refinedText, setRefinedText] = useState("");
   const [submittedText, setSubmittedText] = useState("");
@@ -19,12 +19,14 @@ export function Boss() {
 
   useEffect(() => {
     if (refinedText) {
+      console.log("useEffect triggered for refinedText:", refinedText); // Debugging line
       // Assume you have an endpoint /generate-audio that accepts POST requests
       // and returns a URL to the generated audio file.
       fetch("http://localhost:5000/generate-audio", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          persona: persona,
         },
         body: JSON.stringify({ text: refinedText }),
       })
@@ -38,8 +40,8 @@ export function Boss() {
   }, [refinedText]); // This effect depends on `refinedText`
 
   useEffect(() => {
-    generateFilename();
-  }, []);
+    generateFilename(persona);
+  }, [persona]);
 
   const generateFilename = () => {
     const now = new Date();
@@ -48,7 +50,8 @@ export function Boss() {
     )}${padZero(now.getDate())}_${padZero(now.getHours())}${padZero(
       now.getMinutes()
     )}${padZero(now.getSeconds())}`;
-    const persona = "therapist";
+    // const persona = "trump";
+    // const { persona } = props;
     const type = "log";
     const generatedFilename = `${persona}_${timestamp}_${type}.md`;
     setFilename(generatedFilename);
@@ -80,7 +83,7 @@ export function Boss() {
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
-      <MobileAdvisorBanner />
+      <MobileAdvisorBanner persona={persona} />
       <div key="1" className="flex flex-col flex-1">
         <div className="flex-1 overflow-y-auto">
           <ChatArea
@@ -93,14 +96,14 @@ export function Boss() {
           <MessageInput
             onProcessedText={handleProcessedText}
             onRefinedText={handleRefinedText}
-            persona="therapist"
+            persona={persona}
             filename={filename}
             onFormSubmit={handleFormSubmit} // Pass the function as a prop
           />
           <MicrophoneInput
             onProcessedText={handleProcessedText}
             onRefinedText={handleRefinedText}
-            persona="therapist"
+            persona={persona}
             filename={filename}
             onFormSubmit={handleFormSubmit} // Pass the function as a prop
           />

@@ -6,6 +6,7 @@ import os
 from text_processor import process_text  # Import the process_text function from text_processor.py
 import requests, datetime
 import glob
+from config import personas
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -64,6 +65,8 @@ def flask_process_text():
 
 @app.route('/generate-audio', methods=['POST'])
 def generate_audio():
+    data = request.get_json()
+    persona = data.get('persona', '')
 
     audio_dir = os.path.join('static', 'audio_files')
     
@@ -79,18 +82,21 @@ def generate_audio():
     
     # Generate a unique filename for the audio file
     filename = "audio_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    audio_file_path = generate_audio_file(text, filename)  # Use the function you defined
+    audio_file_path = generate_audio_file(text, filename, persona)  # Use the function you defined
 
     # Assuming the generate_audio_file function returns a relative path within static
-    relative_path = generate_audio_file(text, filename)
+    relative_path = generate_audio_file(text, filename, persona)
     audio_url = request.host_url + 'static/' + relative_path
 
     return jsonify({'status': 'success', 'audioUrl': audio_url})
 
-def generate_audio_file(text, filename):
+def generate_audio_file(text, filename, persona):
     """Function to convert text to speech and save as an audio file."""
     url_template = "https://api.elevenlabs.io/v1/text-to-speech/{}/stream"
-    url = url_template.format(os.getenv('VOICE_ID'))
+    # doesnt work yet
+    # url = url_template.format(personas[persona]['voice_id'])
+    url = url_template.format(os.getenv('JOI_VOICE_ID'))
+    # url = url_template.format(os.getenv('VOICE_ID'))
     headers = {
         "Accept": "audio/mpeg",
         "Content-Type": "application/json",

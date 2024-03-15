@@ -18,6 +18,7 @@ from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
+from config import personas
 
 # Audio parameters
 CHUNK = 1024
@@ -28,21 +29,6 @@ frames = []
 
 # Load environment variables
 load_dotenv()
-
-
-
-# Configuration for different personas
-personas = {
-    'therapist': {
-        'voice_id': os.getenv('THERAPIST_VOICE_ID'),  # Or hardcode the specific ID
-        'filename': 'therapist_log.md',
-        'prompt': "I want you to act as my personal therapist. I'm going to tell you about my day...",
-        'api_key': os.getenv("THERAPIST_XI_API_KEY")  # You could also have specific API keys per persona if needed
-    },
-    # Add more personas as needed
-}
-
-
 
 # Configuration Variables
 openai_api_key = os.getenv('OPENAI_API_KEY')
