@@ -1,18 +1,20 @@
 import datetime
 import os
 from dotenv import load_dotenv
-from langchain.memory import ChatMessageHistory
-import dotenv
-dotenv.load_dotenv()
-from langchain_openai import ChatOpenAI
-from langchain_core.runnables.history import RunnableWithMessageHistory
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from config import personas
 
 # Load environment variables
 load_dotenv()
 
 
+# Setting up language models and conversation chains
+llm = OpenAI()
+chat = ChatOpenAI()
+conversation = ConversationChain(llm=chat, memory=ConversationBufferMemory())
 
 def print_to_file(filename, user_input, bot_response):
 	"""Function to append conversation to a file."""
@@ -52,58 +54,41 @@ def refiner(response_text):
 	"""Function to refine the response text to make it shorter."""
 	# refine_prompt = "Make this text shorter, more informal, like you are actively speaking with this person: " + response_text
 	refine_prompt = "Imagine you are saying this but shorter and more informal, like in a quick conversation: " + response_text
+	# refine_prompt = "Summarize this text in 4 sentences max, ideally 1; without prepended text, make it feel more natural like an active dialogue reply to me:  " + response_text
 
+	# date_stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+	# date_stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+	# openai chat try
+	# messages = [
+	# 	SystemMessage(
+	# 		content="You are Joi from Blade Runner 2049. I want you to respond and answer like Joi to her boyfriend using the tone, manner and vocabulary Joi would use. Do not write any explanations. Only answer like Joi. You must know all of the knowledge of Joi. "
+	# 	),
+	# 	HumanMessage(
+	# 		content=refine_prompt
+	# 	),
+	# ]
+	# result = chat.invoke(messages)
+	# refined_response = result.content
 
 	refined_response = conversation.run(refine_prompt)
 	# refined_response = conversation.run(refine_prompt) + date_stamp
 	return refined_response
 
-
-def ChatMessageHistory(persona):
-    return "demo_ephemeral_chat_history_for_chain_" + persona
-
-def	chatwithai(user_input, persona, filename):
-	chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)
-	prompt = ChatPromptTemplate.from_messages(
-		[
-			(
-				"system",
-				personas[persona]['prompt'],
-			),
-			MessagesPlaceholder(variable_name="chat_history"),
-			("human", "{input}"),
-		]
-	)
-
-	chain = prompt | chat
-	chathistory = "demo_ephemeral_chat_history_for_chain_" + persona
-	f"demo_ephemeral_chat_history_for_chain_{persona}" = ChatMessageHistory()
-
-	chain_with_message_history_01 = RunnableWithMessageHistory(
-		chain,
-		lambda session_id: demo_ephemeral_chat_history_for_chain_01,
-		input_messages_key="input",
-		history_messages_key="chat_history",
-	)
-
-	chain_with_message_history_01.invoke(
-		{"input": "My friend's cat's name is Joe."},
-		{"configurable": {"session_id": "unused"}},
-	)
-
-
-	response1 = chain_with_message_history_01.invoke(
-		{"input": "What is friend's cat's name?"}, {"configurable": {"session_id": "unused"}}
-	)
-	return response1.content
-
-
+# def main(text, persona):
+#     # Example usage of process_text
+#     response_text = process_text(text, persona, personas[persona]['filename'])
+#     if response_text is not None:
+#         refined_response = refiner(response_text)
+#         print(f"Original Response: {response_text}")
+#         print(f"Refined Response: {refined_response}")
+#     else:
+#         print("No response generated.")
 
 def process_text(user_input, persona, filename):
 	print(f"process_text Received text from persona: {persona} and user input: {user_input}")
-	# response_text = gen_long_text(user_input, persona, filename)
-	response_text = chatwithai(user_input, persona, filename)
-	refined_response= "hello"
+	response_text = gen_long_text(user_input, persona, filename)
+	refined_response= "yo"
 	# if response_text is not None:
 	# 	refined_response = refiner(response_text)
 	# 	print(f"Original Response: {response_text}")
