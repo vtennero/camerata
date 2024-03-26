@@ -9,6 +9,7 @@ export function MessageInput({
   persona,
   filename,
   onFormSubmit,
+  onChatHistory,
 }) {
   const [input, setInput] = useState("");
 
@@ -29,11 +30,22 @@ export function MessageInput({
         persona: persona, // The persona passed as a prop
         filename: filename,
       });
-      console.log("Full response data:", response.data); // Debugging log
+      console.log("MessageInput Full response data:", response.data); // Debugging log
       onProcessedText(response.data.processed_text); // Call the callback function with the processed text
-      console.log("Processed text received:", response.data.processed_text); // Debugging log
+      console.log(
+        "MessageInput Processed text received:",
+        response.data.processed_text
+      ); // Debugging log
       onRefinedText(response.data.refined_text);
-      console.log("Refined text received:", response.data.refined_text); // Debugging log
+      console.log(
+        "MessageInput Refined text received:",
+        response.data.refined_text
+      ); // Debugging log
+      onChatHistory(response.data.chatHistory);
+      console.log(
+        "MessageInput Chathistory received:",
+        response.data.chatHistory
+      ); // Debugging log
       setInput(""); // Clear the input after sending
     } catch (error) {
       console.error("Error processing text:", error);

@@ -108,22 +108,19 @@ export function Boss({ persona }) {
     <div className="flex flex-col h-screen">
       <Navbar />
       <MobileAdvisorBanner persona={persona} />
-      <div className="flex flex-1 overflow-hidden">
-        {" "}
-        {/* Ensure this div allows for flex children to fill the space but not overflow */}
-        <SidebarContent persona={persona} className="md:w-1/3" />
+      <div className="md:flex md:flex-row-reverse">
+        <SidebarContent persona={persona} />
         <div key="1" className="flex flex-col flex-1 md:w-2/3">
           <div className="flex-1 overflow-y-auto">
-            {/* ChatArea scrolls independently */}
             <ChatArea
               processedText={processedText}
               refinedText={refinedText}
               submittedText={submittedText}
               chatHistory={chatHistory}
+              // persona={persona}
             />
           </div>
-          {/* This div is fixed at the bottom of the ChatArea's parent container */}
-          <div className="p-4 flex gap-2 items-center sticky bottom-0 bg-white">
+          <div className="p-4 flex gap-2 items-center">
             <MessageInput
               onProcessedText={handleProcessedText}
               onRefinedText={handleRefinedText}

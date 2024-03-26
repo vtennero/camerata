@@ -59,8 +59,7 @@ def refiner(response_text):
 	return refined_response
 
 
-def ChatMessageHistory(persona):
-    return "demo_ephemeral_chat_history_for_chain_" + persona
+
 
 def	chatwithai(user_input, persona, filename):
 	chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)
@@ -77,7 +76,6 @@ def	chatwithai(user_input, persona, filename):
 
 	chain = prompt | chat
 	chathistory = "demo_ephemeral_chat_history_for_chain_" + persona
-	f"demo_ephemeral_chat_history_for_chain_{persona}" = ChatMessageHistory()
 
 	chain_with_message_history_01 = RunnableWithMessageHistory(
 		chain,

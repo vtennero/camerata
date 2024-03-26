@@ -28,16 +28,16 @@ const MobileAdvisorBanner = ({ persona }) => {
 
   return (
     <div className="md:hidden bg-gray-200 text-black p-4 flex items-start justify-between">
-      <div className="flex items-start w-full">
-        <div className="w-1/4 flex-none" style={{ minWidth: "25%" }}>
+      <div className="flex items-start">
+        <div className="w-32 h-32">
           <img
-            className="w-full h-auto"
-            style={{ aspectRatio: "1 / 1" }}
+            className="w-full h-full object-cover"
             src={`${persona}.png`}
             alt={`${persona}`}
+            style={{ aspectRatio: "1 / 1" }}
           />
         </div>
-        <div className="pl-4 flex-grow">
+        <div className="pl-4">
           <div className="text-sm font-semibold mb-1">{personaName}</div>
           <div className="text-xs font-light text-gray-500">{description}</div>
         </div>

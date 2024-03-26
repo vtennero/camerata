@@ -20,16 +20,6 @@ prompt = ChatPromptTemplate.from_messages(
 
 chain = prompt | chat
 
-
-demo_ephemeral_chat_history_for_chain_01 = ChatMessageHistory()
-
-chain_with_message_history_01 = RunnableWithMessageHistory(
-    chain,
-    lambda session_id: demo_ephemeral_chat_history_for_chain_01,
-    input_messages_key="input",
-    history_messages_key="chat_history",
-)
-
 demo_ephemeral_chat_history_for_chain_02 = ChatMessageHistory()
 
 chain_with_message_history_02 = RunnableWithMessageHistory(
@@ -39,36 +29,20 @@ chain_with_message_history_02 = RunnableWithMessageHistory(
     history_messages_key="chat_history",
 )
 
-chain_with_message_history_01.invoke(
-    {"input": "My friend's cat's name is Joe."},
-    {"configurable": {"session_id": "unused"}},
-)
 
 chain_with_message_history_02.invoke(
     {"input": "My friend's cat's name is Deborah."},
     {"configurable": {"session_id": "unused"}},
 )
 
-response1 = chain_with_message_history_01.invoke(
-    {"input": "What is friend's cat's name?"}, {"configurable": {"session_id": "unused"}}
-)
-
 response2 = chain_with_message_history_02.invoke(
     {"input": "What is friend's cat's name?"}, {"configurable": {"session_id": "unused"}}
-)
-
-print("response 1: " + response1.content)
-print("response 2: " + response2.content)
-
-response1= chain_with_message_history_01.invoke(
-    {"input": "Is my friend's cat's name Joe?"}, {"configurable": {"session_id": "unused"}}
 )
 
 response2 = chain_with_message_history_02.invoke(
     {"input": "Is my friend's cat's name Joe?"}, {"configurable": {"session_id": "unused"}}
 )
 
-print("response 1: " + response1.content)
 print("response 2: " + response2.content)
 
 print(demo_ephemeral_chat_history_for_chain_02.messages)

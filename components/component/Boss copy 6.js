@@ -7,7 +7,6 @@ import { ChatArea } from "../ui/ChatArea";
 import Navbar from "@/app/components/Navbar";
 import { useEffect, useState } from "react";
 import MobileAdvisorBanner from "../ui/MobileAdvisorBanner";
-import { SidebarContent } from "../ui/Sidebar";
 
 export function Boss({ persona }) {
   const [processedText, setProcessedText] = useState("");
@@ -105,41 +104,36 @@ export function Boss({ persona }) {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    // <div className="flex flex-col h-full"/>
+    <div className="flex flex-col h-full">
       <Navbar />
       <MobileAdvisorBanner persona={persona} />
-      <div className="flex flex-1 overflow-hidden">
-        {" "}
-        {/* Ensure this div allows for flex children to fill the space but not overflow */}
-        <SidebarContent persona={persona} className="md:w-1/3" />
-        <div key="1" className="flex flex-col flex-1 md:w-2/3">
-          <div className="flex-1 overflow-y-auto">
-            {/* ChatArea scrolls independently */}
-            <ChatArea
-              processedText={processedText}
-              refinedText={refinedText}
-              submittedText={submittedText}
-              chatHistory={chatHistory}
-            />
-          </div>
-          {/* This div is fixed at the bottom of the ChatArea's parent container */}
-          <div className="p-4 flex gap-2 items-center sticky bottom-0 bg-white">
-            <MessageInput
-              onProcessedText={handleProcessedText}
-              onRefinedText={handleRefinedText}
-              persona={persona}
-              filename={filename}
-              onFormSubmit={handleFormSubmit}
-              onChatHistory={handleChatHistory}
-            />
-            <MicrophoneInput
-              onProcessedText={handleProcessedText}
-              onRefinedText={handleRefinedText}
-              persona={persona}
-              filename={filename}
-              onFormSubmit={handleFormSubmit}
-            />
-          </div>
+      <div key="1" className="flex flex-col flex-1">
+        <div className="flex-1 overflow-y-auto">
+          <ChatArea
+            processedText={processedText}
+            refinedText={refinedText}
+            submittedText={submittedText}
+            chatHistory={chatHistory}
+            // persona={persona}
+          />
+        </div>
+        <div className="p-4 flex gap-2 items-center">
+          <MessageInput
+            onProcessedText={handleProcessedText}
+            onRefinedText={handleRefinedText}
+            persona={persona}
+            filename={filename}
+            onFormSubmit={handleFormSubmit} // Pass the function as a prop
+            onChatHistory={handleChatHistory} // Pass the function as a prop
+          />
+          <MicrophoneInput
+            onProcessedText={handleProcessedText}
+            onRefinedText={handleRefinedText}
+            persona={persona}
+            filename={filename}
+            onFormSubmit={handleFormSubmit} // Pass the function as a prop
+          />
         </div>
       </div>
     </div>
