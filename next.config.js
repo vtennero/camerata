@@ -1,8 +1,4 @@
 module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
   async rewrites() {
     return [
       {

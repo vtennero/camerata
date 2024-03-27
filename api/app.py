@@ -3,7 +3,6 @@ from flask_cors import CORS
 import speech_recognition as sr
 from pydub import AudioSegment
 import os
-# from text_processor import process_text  # Import the process_text function from text_processor.py
 import requests, datetime
 import glob
 from config import personas
