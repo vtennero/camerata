@@ -8,6 +8,7 @@ import Navbar from "@/app/components/Navbar";
 import { useEffect, useState } from "react";
 import MobileAdvisorBanner from "../ui/MobileAdvisorBanner";
 import { SidebarContent } from "../ui/Sidebar";
+import { useSession } from "@/contexts/SessionContext";
 
 export function Boss({ persona }) {
   const [processedText, setProcessedText] = useState("");
@@ -15,6 +16,8 @@ export function Boss({ persona }) {
   const [submittedText, setSubmittedText] = useState("");
   const [filename, setFilename] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+
+  const session = useSession();
 
   useEffect(() => {
     const fetchAudio = async () => {
@@ -103,6 +106,15 @@ export function Boss({ persona }) {
   const handleFormSubmit = (textInput) => {
     console.log("Form submitted with text:", textInput);
   };
+
+  if (!session) {
+    return (
+      <div className="flex flex-col h-screen">
+        <Navbar />
+        <div>Please log in to view this content.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen">
