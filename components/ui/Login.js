@@ -22,12 +22,15 @@ export default function LoginAndOut() {
   const signInWithGithub = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "github",
+      redirectTo: window.location.origin,
     });
     // The session state will be updated by the onAuthStateChange listener
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await supabase.auth.signOut({
+      redirectTo: window.location.origin,
+    });
     // The session state will be updated by the onAuthStateChange listener
   };
 
