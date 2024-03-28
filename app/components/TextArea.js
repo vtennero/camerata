@@ -12,7 +12,7 @@ const TextArea = ({ onProcessedText, onRefinedText, persona, filename }) => {
   const handleSendText = async () => {
     try {
       const response = await axios.post(
-        `${process.env.BACKEND_ROUTE}/process-text`,
+        `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}/process-text`,
         {
           text: input,
           persona: persona, // The persona passed as a prop

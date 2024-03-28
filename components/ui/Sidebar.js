@@ -8,7 +8,7 @@ export const SidebarContent = ({ persona }) => {
     // Function to fetch persona description
     const fetchDescription = async () => {
       const response = await fetch(
-        `${process.env.BACKEND_ROUTE}/getPersonaDescription?name=${persona}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}/getPersonaDescription?name=${persona}`,
         {
           method: "GET",
         }

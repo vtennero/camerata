@@ -29,7 +29,7 @@ export function Boss({ persona }) {
             refinedText
           );
           const response = await fetch(
-            `${process.env.BACKEND_ROUTE}/generate-audio`,
+            `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}/generate-audio`,
             {
               // const response = await fetch("http://localhost:5000/generate-audio", {
               method: "POST",
