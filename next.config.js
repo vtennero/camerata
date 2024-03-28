@@ -18,7 +18,7 @@ const nextConfig = {
         destination:
           process.env.NODE_ENV === "development"
             ? "http://localhost:5000/:path*"
-            : "/api/",
+            : "https://camerata01.as.r.appspot.com/:path*",
       },
     ];
   },
