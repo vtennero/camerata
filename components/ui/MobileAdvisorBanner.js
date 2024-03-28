@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 const MobileAdvisorBanner = ({ persona }) => {
   const [description, setDescription] = useState(""); // State to hold the description
   const [personaName, setpersonaName] = useState("");
+  console.log("Backend Route:", process.env.NEXT_PUBLIC_BACKEND_ROUTE);
+  // Your fetch call here
 
   useEffect(() => {
     // Function to fetch persona description
