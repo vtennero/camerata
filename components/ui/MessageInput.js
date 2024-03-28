@@ -25,11 +25,14 @@ export function MessageInput({
 
   const handleSendText = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/process-text", {
-        text: input,
-        persona: persona, // The persona passed as a prop
-        filename: filename,
-      });
+      const response = await axios.post(
+        `${process.env.BACKEND_ROUTE}/process-text`,
+        {
+          text: input,
+          persona: persona, // The persona passed as a prop
+          filename: filename,
+        }
+      );
       console.log("MessageInput Full response data:", response.data); // Debugging log
       onProcessedText(response.data.processed_text); // Call the callback function with the processed text
       console.log(

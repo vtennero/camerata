@@ -28,14 +28,18 @@ export function Boss({ persona }) {
             "Sending request to generate-audio with text:",
             refinedText
           );
-          const response = await fetch("http://localhost:5000/generate-audio", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              persona: persona,
-            },
-            body: JSON.stringify({ text: refinedText, persona: persona }),
-          });
+          const response = await fetch(
+            `${process.env.BACKEND_ROUTE}/generate-audio`,
+            {
+              // const response = await fetch("http://localhost:5000/generate-audio", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                persona: persona,
+              },
+              body: JSON.stringify({ text: refinedText, persona: persona }),
+            }
+          );
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

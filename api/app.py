@@ -168,7 +168,7 @@ def generate_audio():
 
     # Assuming the generate_audio_file function returns a relative path within static
     relative_path = generate_audio_file_w_openai(text, filename, persona)
-    # relative_path = generate_audio_file(text, filename, persona)
+    # relative_path = generate_audio_file_w_eleven(text, filename, persona)
     audio_url = request.host_url + 'static/' + relative_path
 
     return jsonify({'status': 'success', 'audioUrl': audio_url})
@@ -201,7 +201,7 @@ def generate_audio_file_w_openai(text, filename, persona):
     # Return a relative path to the audio file within the static directory
     return os.path.join('audio_files', f"{filename}.mp3")
 
-def generate_audio_file(text, filename, persona):
+def generate_audio_file_w_eleven(text, filename, persona):
     """Function to convert text to speech and save as an audio file."""
     url_template = "https://api.elevenlabs.io/v1/text-to-speech/{}/stream"
     url = url_template.format(personas[persona].get('voice_id'))

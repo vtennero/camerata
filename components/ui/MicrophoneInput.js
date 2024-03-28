@@ -55,7 +55,7 @@ export function MicrophoneInput({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/convert-audio-to-text",
+        `${process.env.BACKEND_ROUTE}/convert-audio-to-text`,
         {
           method: "POST",
           body: formData,

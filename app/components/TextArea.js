@@ -11,11 +11,14 @@ const TextArea = ({ onProcessedText, onRefinedText, persona, filename }) => {
 
   const handleSendText = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/process-text", {
-        text: input,
-        persona: persona, // The persona passed as a prop
-        filename: filename,
-      });
+      const response = await axios.post(
+        `${process.env.BACKEND_ROUTE}/process-text`,
+        {
+          text: input,
+          persona: persona, // The persona passed as a prop
+          filename: filename,
+        }
+      );
       console.log("Full response data:", response.data); // Add this line
       onProcessedText(response.data.processed_text); // Call the callback function with the processed text
       console.log("Processed text received:", response.data.processed_text);
