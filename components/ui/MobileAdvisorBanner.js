@@ -27,7 +27,7 @@ const MobileAdvisorBanner = ({ persona }) => {
   }, [persona]); // Dependency array, re-fetch if persona changes
 
   return (
-    <div className="md:hidden bg-slate-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-400  text-black p-4 flex items-start justify-between">
+    <div className="md:hidden bg-slate-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-400   p-4 flex items-start justify-between">
       <div className="flex items-start w-full">
         <div className="w-1/4 flex-none" style={{ minWidth: "25%" }}>
           <img
@@ -38,8 +38,12 @@ const MobileAdvisorBanner = ({ persona }) => {
           />
         </div>
         <div className="pl-4 flex-grow">
-          <div className="text-sm font-semibold mb-1">{personaName}</div>
-          <div className="text-xs font-light text-gray-500">{description}</div>
+          <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-gray-100">
+            {personaName}
+          </div>
+          <div className="text-xs font-light text-gray-500  dark:text-gray-300">
+            {description}
+          </div>
         </div>
       </div>
     </div>
