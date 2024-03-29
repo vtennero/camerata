@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 const MobileAdvisorBanner = ({ persona }) => {
   const [description, setDescription] = useState(""); // State to hold the description
   const [personaName, setpersonaName] = useState("");
-  console.log("Backend Route:", process.env.NEXT_PUBLIC_BACKEND_ROUTE);
-  // Your fetch call here
 
   useEffect(() => {
     // Function to fetch persona description
@@ -29,7 +27,7 @@ const MobileAdvisorBanner = ({ persona }) => {
   }, [persona]); // Dependency array, re-fetch if persona changes
 
   return (
-    <div className="md:hidden bg-gray-200 text-black p-4 flex items-start justify-between">
+    <div className="md:hidden bg-slate-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-400  text-black p-4 flex items-start justify-between">
       <div className="flex items-start w-full">
         <div className="w-1/4 flex-none" style={{ minWidth: "25%" }}>
           <img

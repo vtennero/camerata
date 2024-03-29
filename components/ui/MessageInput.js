@@ -57,14 +57,16 @@ export function MessageInput({
 
   // MessageInput.jsx
   return (
-    <form className="flex w-full gap-2 items-center" onSubmit={handleSubmit}>
+    <form className="flex w-full gap-2 items-center " onSubmit={handleSubmit}>
       <Input
         className="flex-1"
         value={input}
         onChange={handleTextChange}
         placeholder="Type a message..."
       />
-      <Button type="submit">Send</Button>
+      <Button type="submit" className="bg-blue-800 dark:bg-blue-600">
+        Send
+      </Button>
     </form>
   );
 }

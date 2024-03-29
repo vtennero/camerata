@@ -26,18 +26,22 @@ export const SidebarContent = ({ persona }) => {
   }, [persona]); // Dependency array, re-fetch if persona changes
 
   return (
-    <div className="hidden md:flex md:w-1/3 bg-gray-100 p-4 flex-col items-center justify-center space-y-4">
-      <div className="w-64 h-64 bg-gray-300 flex items-center justify-center overflow-hidden">
+    <div className="hidden md:flex md:w-1/3 bg-slate-100 dark:bg-gray-900 p-4 flex-col items-center justify-center space-y-4">
+      <div className="w-64 h-64   flex items-center justify-center overflow-hidden">
         <img
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover dark:border-gray-400 border border-gray-200"
           src={`${persona}.png`}
           alt={`${persona}`}
           style={{ aspectRatio: "1 / 1" }}
         />
       </div>
 
-      <div className="text-center text-lg font-semibold">{personaName}</div>
-      <div className=" text-gray-600  text-justify">{description}</div>
+      <div className="text-center text-lg font-bold text-gray-900">
+        {personaName}
+      </div>
+      <div className=" text-gray-600 dark:text-slate-400 text-justify">
+        {description}
+      </div>
     </div>
   );
 };

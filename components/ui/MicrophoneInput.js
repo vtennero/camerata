@@ -73,7 +73,7 @@ export function MicrophoneInput({
   };
 
   const MicrophoneIcon = () => (
-    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+    <svg className="h-6 w-6 " viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
       <path d="M19 10v2a7 7 0 01-14 0v-2a1 1 0 012 0v2a5 5 0 0010 0v-2a1 1 0 012 0z" />
       <path d="M12 19a6.966 6.966 0 004.472-1.58l1.415 1.414A8.964 8.964 0 0112 21a8.964 8.964 0 01-5.887-2.166l1.415-1.414A6.966 6.966 0 0012 19z" />
@@ -84,7 +84,9 @@ export function MicrophoneInput({
     <div>
       <Button
         className={`${
-          isRecording ? "bg-red-500" : "bg-green-400 dark:bg-gray-800"
+          isRecording
+            ? "bg-red-500 dark:bg-red-600"
+            : "bg-green-400 dark:bg-green-500"
         } items-center justify-center rounded-md`}
         type="button"
         onClick={toggleRecording}

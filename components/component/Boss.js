@@ -139,7 +139,7 @@ export function Boss({ persona }) {
             />
           </div>
           {/* This div is fixed at the bottom of the ChatArea's parent container */}
-          <div className="p-4 flex gap-2 items-center sticky bottom-0 bg-white">
+          <div className="p-4 flex gap-2 items-center sticky bottom-0 bg-white dark:bg-gray-900 border-l border-t dark:border-gray-400 border-gray-100">
             <MessageInput
               onProcessedText={handleProcessedText}
               onRefinedText={handleRefinedText}
