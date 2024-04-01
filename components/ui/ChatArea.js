@@ -1,9 +1,4 @@
-export function ChatArea({
-  processedText,
-  refinedText,
-  submittedText,
-  chatHistory,
-}) {
+export function ChatArea({ chatHistory }) {
   return (
     <div className="flex flex-col h-full dark:bg-gray-800 bg-white dark:border-gray-400 border-gray-100 lg:border-l">
       <div className="flex-1 overflow-y-auto p-4">

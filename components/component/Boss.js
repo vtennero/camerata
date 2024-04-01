@@ -125,20 +125,11 @@ export function Boss({ persona }) {
       <Navbar />
       <MobileAdvisorBanner persona={persona} />
       <div className="flex flex-1 overflow-hidden">
-        {" "}
-        {/* Ensure this div allows for flex children to fill the space but not overflow */}
         <SidebarContent persona={persona} className="md:w-1/3" />
         <div key="1" className="flex flex-col flex-1 md:w-2/3">
           <div className="flex-1 overflow-y-auto">
-            {/* ChatArea scrolls independently */}
-            <ChatArea
-              processedText={processedText}
-              refinedText={refinedText}
-              submittedText={submittedText}
-              chatHistory={chatHistory}
-            />
+            <ChatArea chatHistory={chatHistory} />
           </div>
-          {/* This div is fixed at the bottom of the ChatArea's parent container */}
           <div className="p-4 flex gap-2 items-center sticky bottom-0 bg-white dark:bg-gray-900 border-l border-t dark:border-gray-400 border-gray-100">
             <MessageInput
               onProcessedText={handleProcessedText}
@@ -154,6 +145,7 @@ export function Boss({ persona }) {
               persona={persona}
               filename={filename}
               onFormSubmit={handleFormSubmit}
+              onChatHistory={handleChatHistory}
             />
           </div>
         </div>

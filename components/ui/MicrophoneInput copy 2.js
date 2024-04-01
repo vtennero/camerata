@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 
-export function MicrophoneInput({
-  onProcessedText,
-  onRefinedText,
-  persona,
-  filename,
-  onChatHistory,
-}) {
+export function MicrophoneInput({ onProcessedText, persona, filename }) {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
 
@@ -62,17 +56,7 @@ export function MicrophoneInput({
         }
       );
       const data = await response.json();
-      // Ensure that this key matches exactly what the backend is sending
-      if (data.status === "success") {
-        // Make sure 'processed_text' is the key the backend uses
-        onProcessedText(data.processed_text); // This should now update correctly
-        onRefinedText(data.refined_text);
-        onChatHistory(data.chatHistory);
-        console.log("MessageInput Chathistory received:", data.chatHistory); // Debugging log
-      } else {
-        console.error("Error in processing: ", data.message);
-        // Handle any error or unsuccessful processing here
-      }
+      onProcessedText(data.staticText); // Assuming the backend responds with a key named `staticText`
     } catch (error) {
       console.error("Error uploading audio file:", error);
     }
