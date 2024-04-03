@@ -1,3 +1,4 @@
+// MessageInput.js
 import React, { useState } from "react";
 import axios from "axios";
 import { Input } from "@/components/ui/input"; // Ensure these are correctly imported
@@ -78,7 +79,10 @@ export function MessageInput({
       >
         {isLoading ? (
           <>
-            <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" />
+            <FontAwesomeIcon
+              icon={faCircleNotch}
+              className="animate-spin text-white bg-blue-500"
+            />
           </>
         ) : (
           "Send"

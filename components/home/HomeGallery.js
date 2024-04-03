@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/components/ui/Navbar";
 import Image from "next/image";
 import Link from "next/link"; // Import Link
 

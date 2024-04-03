@@ -1,10 +1,12 @@
 // MainChat.js
 "use client";
+
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { MicrophoneInput } from "./MicrophoneInput";
 import { MessageInput } from "./MessageInput";
+
 import { ChatArea } from "./ChatArea";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/components/ui/Navbar";
 import { useEffect, useState } from "react";
 import MobileAdvisorBanner from "./MobileAdvisorBanner";
 import { SidebarContent } from "./Sidebar";
