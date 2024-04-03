@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Input } from "@/components/ui/input"; // Ensure these are correctly imported
 import { Button } from "@/components/ui/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 export function MessageInput({
   onProcessedText,
@@ -12,6 +14,7 @@ export function MessageInput({
   onChatHistory,
 }) {
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
@@ -24,6 +27,8 @@ export function MessageInput({
   };
 
   const handleSendText = async () => {
+    setIsLoading(true); // Start loading
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}/process-text`,
@@ -50,8 +55,10 @@ export function MessageInput({
         response.data.chatHistory
       ); // Debugging log
       setInput(""); // Clear the input after sending
+      setIsLoading(false); // Start loading
     } catch (error) {
       console.error("Error processing text:", error);
+      setIsLoading(false); // Start loading
     }
   };
 
@@ -64,8 +71,18 @@ export function MessageInput({
         onChange={handleTextChange}
         placeholder="Type a message..."
       />
-      <Button type="submit" className="bg-blue-800 dark:bg-blue-600">
-        Send
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded bg-blue-800 text-white dark:bg-blue-600 disabled:bg-blue-500/80 disabled:cursor-not-allowed min-w-[76px]"
+      >
+        {isLoading ? (
+          <>
+            <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" />
+          </>
+        ) : (
+          "Send"
+        )}
       </Button>
     </form>
   );

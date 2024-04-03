@@ -1,4 +1,12 @@
+import { useEffect, useRef } from "react";
+
 export function ChatArea({ chatHistory }) {
+  const messagesEndRef = useRef(null); // Create a ref for the messages container
+
+  useEffect(() => {
+    // Whenever chatHistory changes, scroll to the bottom of the messages container
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatHistory]);
   return (
     <div className="flex flex-col h-full dark:bg-gray-800 bg-white dark:border-gray-400 border-gray-100 lg:border-l">
       <div className="flex-1 overflow-y-auto p-4">
@@ -24,6 +32,7 @@ export function ChatArea({ chatHistory }) {
               </div>
             )
           )}
+          <div ref={messagesEndRef} />
         </div>
       </div>
     </div>

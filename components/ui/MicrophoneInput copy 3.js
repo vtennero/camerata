@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function MicrophoneInput({
   onProcessedText,
@@ -13,7 +11,6 @@ export function MicrophoneInput({
 }) {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
@@ -44,7 +41,6 @@ export function MicrophoneInput({
       mediaRecorder.stop(); // Stop the recording
       mediaRecorder.stream.getTracks().forEach((track) => track.stop()); // Stop the media stream
       setRecording(false);
-      setIsLoading(true); // Start loading
     } else {
       startRecording();
       setRecording(true);
@@ -73,21 +69,17 @@ export function MicrophoneInput({
         onRefinedText(data.refined_text);
         onChatHistory(data.chatHistory);
         console.log("MessageInput Chathistory received:", data.chatHistory); // Debugging log
-        setIsLoading(false); // Start loading
       } else {
         console.error("Error in processing: ", data.message);
-        setIsLoading(false); // Start loading
         // Handle any error or unsuccessful processing here
       }
     } catch (error) {
       console.error("Error uploading audio file:", error);
-      setIsLoading(false); // Start loading
     }
   };
 
   const MicrophoneIcon = () => (
-    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="white">
-      {/* <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"> */}
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
       <path d="M19 10v2a7 7 0 01-14 0v-2a1 1 0 012 0v2a5 5 0 0010 0v-2a1 1 0 012 0z" />
       <path d="M12 19a6.966 6.966 0 004.472-1.58l1.415 1.414A8.964 8.964 0 0112 21a8.964 8.964 0 01-5.887-2.166l1.415-1.414A6.966 6.966 0 0012 19z" />
@@ -97,23 +89,15 @@ export function MicrophoneInput({
   return (
     <div className="flex justify-center">
       <button
-        onClick={handleButtonClick} // Your existing logic for handling start/stop recording
+        onClick={handleButtonClick} // Assuming this is your existing logic to handle start/stop recording
         className={`${
           recording
             ? "bg-red-500 dark:bg-red-600"
             : "bg-green-400 dark:bg-green-500"
         } flex items-center justify-center rounded-md p-2`}
         type="button"
-        disabled={isLoading} // Assuming isLoading is true when loading and false otherwise
       >
-        {isLoading ? (
-          <FontAwesomeIcon
-            icon={faCircleNotch}
-            className="animate-spin h-6 w-6 text-white"
-          />
-        ) : (
-          <MicrophoneIcon />
-        )}
+        <MicrophoneIcon />
       </button>
     </div>
   );

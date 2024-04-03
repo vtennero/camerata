@@ -1,16 +1,16 @@
-// Boss.js
+// MainChat.js
 "use client";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { MicrophoneInput } from "../ui/MicrophoneInput";
-import { MessageInput } from "../ui/MessageInput";
-import { ChatArea } from "../ui/ChatArea";
+import { MicrophoneInput } from "./MicrophoneInput";
+import { MessageInput } from "./MessageInput";
+import { ChatArea } from "./ChatArea";
 import Navbar from "@/app/components/Navbar";
 import { useEffect, useState } from "react";
-import MobileAdvisorBanner from "../ui/MobileAdvisorBanner";
-import { SidebarContent } from "../ui/Sidebar";
+import MobileAdvisorBanner from "./MobileAdvisorBanner";
+import { SidebarContent } from "./Sidebar";
 import { useSession } from "@/contexts/SessionContext";
 
-export function Boss({ persona }) {
+export function MainChat({ persona }) {
   const [processedText, setProcessedText] = useState("");
   const [refinedText, setRefinedText] = useState("");
   const [submittedText, setSubmittedText] = useState("");

@@ -1,5 +1,5 @@
 "use client";
-import { Boss } from "@/components/component/Boss";
+import { MainChat } from "@/components/ui/MainChat";
 import { usePathname } from "next/navigation";
 
 export default function Home() {
@@ -8,5 +8,5 @@ export default function Home() {
   const pathSegments = pathname.split("/");
   const pageName = pathSegments[pathSegments.length - 1] || "home";
 
-  return <Boss persona={pageName} />;
+  return <MainChat persona={pageName} />;
 }
