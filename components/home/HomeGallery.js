@@ -13,6 +13,7 @@ export default function HomeGallery() {
     "/homer.png",
     "/jack.png",
     "/talleyrand.png",
+    "/voltaire.png",
   ];
 
   // Create a new array that contains objects with image paths, page names, and placeholder names
