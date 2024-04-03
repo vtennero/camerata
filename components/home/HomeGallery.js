@@ -27,7 +27,7 @@ export default function HomeGallery() {
   });
 
   return (
-    <div className=" h-screen bg-gray-200 dark:bg-gray-800">
+    <div className=" h-full bg-gray-200 dark:bg-gray-800">
       <Navbar />
       <div className="container mx-auto px-5 py-2 lg:px-32 lg:pt-24 ">
         <div className="-m-1 flex flex-wrap md:-m-2 ">
