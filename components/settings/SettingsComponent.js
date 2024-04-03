@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSession } from "@/contexts/SessionContext";
+import Navbar from "../ui/Navbar";
 
 function SettingsComponent() {
   const [model, setModel] = useState("");
@@ -13,6 +15,7 @@ function SettingsComponent() {
     "gpt-3.5-turbo",
   ];
   const audioServiceOptions = ["OpenAI", "ElevenLabs"];
+  const session = useSession();
 
   useEffect(() => {
     // Function to fetch current settings
@@ -69,6 +72,10 @@ function SettingsComponent() {
     setAudioService(e.target.value);
     updateSetting("AUDIO_SERVICE", e.target.value);
   };
+
+  if (!session) {
+    return <div>Please log in to view this content.</div>;
+  }
 
   return (
     <div className="space-y-4">
