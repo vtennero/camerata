@@ -20,14 +20,19 @@ from openai import OpenAI
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-dotenv.load_dotenv()
+dotenv_path = '../env.local'
+
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
+# Load the environment variables from your specified file
+load_dotenv(dotenv_path=dotenv_path)
 persona_chat_histories = {persona: ChatMessageHistory() for persona in personas.keys()}
 
 
 
 def create_chain_with_message_history_for_persona(persona_name):
     persona_settings = personas[persona_name]
-    chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2)  # Or reuse if possible
+    chat = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0.2, openai_api_key=openai_api_key)  # Or reuse if possible
     prompt = ChatPromptTemplate.from_messages([
         ("system", persona_settings['prompt']),
         MessagesPlaceholder(variable_name="chat_history"),
