@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSession } from "@/contexts/SessionContext";
-import Navbar from "../ui/Navbar";
 
 function SettingsComponent() {
   const [model, setModel] = useState("");

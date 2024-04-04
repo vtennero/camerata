@@ -1,38 +1,14 @@
+import LoginAndOut from "@/components/ui/Login";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useSession } from "@/contexts/SessionContext";
+import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import MenuOverlay from "./NavbarMenuOverlay";
 import NavLink from "./NavLink";
-import supabase from "../auth/supabaseClient";
 
 function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signInWithGithub = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "github",
-      redirectTo: window.location.origin,
-    });
-  };
-
-  const signOut = async () => {
-    await supabase.auth.signOut();
-  };
+  const session = useSession();
 
   let navLinks = [
     {
@@ -44,11 +20,13 @@ function Navbar() {
       path: "/settings",
     },
   ];
-
+  // Dynamically adjust links based on session
   if (session) {
-    navLinks.push({ title: "Logout", path: "#logout", action: signOut });
+    // User is logged in, add logout link
+    navLinks = [...navLinks, { title: "Logout", path: "#logout" }];
   } else {
-    navLinks.push({ title: "Login", path: "#login", action: signInWithGithub });
+    // User is logged out, add login link
+    navLinks = [...navLinks, { title: "Login", path: "#login" }];
   }
 
   return (
@@ -79,10 +57,7 @@ function Navbar() {
         <div className="menu hidden md:block md:w-auto" id="navbar">
           <ul className="flex p-4 md:p-0 md:flex-row md:space-x-8 mt-0">
             {navLinks.map((link, index) => (
-              <li
-                key={index}
-                onClick={() => (link.action ? link.action() : null)}
-              >
+              <li key={index}>
                 <NavLink href={link.path} title={link.title} />
               </li>
             ))}
