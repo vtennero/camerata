@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 export const SidebarContent = ({ persona }) => {
   const [description, setDescription] = useState("");
   const [personaName, setpersonaName] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     // Function to fetch persona description
     const fetchDescription = async () => {
+      setIsLoading(true); // Set loading to false after fetching data
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}/getPersonaDescription?name=${persona}`,
         {
@@ -20,10 +22,15 @@ export const SidebarContent = ({ persona }) => {
       const data = await response.json();
       setDescription(data.description); // Update the description state
       setpersonaName(data.name); // Update the description state
+      setIsLoading(false); // Set loading to false after fetching data
     };
 
     fetchDescription(); // Call the fetch function
   }, [persona]); // Dependency array, re-fetch if persona changes
+
+  if (isLoading) {
+    return <div>Loading persona...</div>; // Display loading indicator
+  }
 
   return (
     <div className="hidden md:flex md:w-1/3 bg-slate-100 dark:bg-gray-900 p-4 flex-col items-center justify-center space-y-4">
