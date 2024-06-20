@@ -5,6 +5,7 @@ function SettingsComponent() {
   const [model, setModel] = useState("");
   const [audioService, setAudioService] = useState("");
   const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   // Options for the dropdowns
   const modelOptions = [
@@ -19,6 +20,7 @@ function SettingsComponent() {
   useEffect(() => {
     // Function to fetch current settings
     const fetchCurrentSettings = async () => {
+      setIsLoading(true); // Set loading to true before fetching data
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}/current-settings`
       );
@@ -29,6 +31,7 @@ function SettingsComponent() {
       } else {
         // Handle errors or set defaults
       }
+      setIsLoading(false); // Set loading to false after fetching data
     };
 
     fetchCurrentSettings();
@@ -74,6 +77,10 @@ function SettingsComponent() {
 
   if (!session) {
     return <div>Please log in to view this content.</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading settings...</div>; // Display loading indicator
   }
 
   return (
