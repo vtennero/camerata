@@ -13,7 +13,8 @@ export function ChatArea({ chatHistory }) {
       <div className="flex-1 overflow-y-auto p-4">
         <div className="grid p-4 gap-4">
           {chatHistory.map((chat, index) =>
-            chat.type === "human" ? (
+            chat.sender === "human" ? (
+              // chat.type === "human" ? (
               <div
                 key={index}
                 className="flex items-center justify-end rounded-xl bg-blue-600 text-white dark:text-gray-100 p-4 ml-8"
