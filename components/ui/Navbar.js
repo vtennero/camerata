@@ -36,8 +36,8 @@ function Navbar() {
 
   let navLinks = [
     {
-      title: "Roadmap",
-      path: "/roadmap",
+      title: "MindChronicle",
+      path: "/mindchronicle",
     },
     {
       title: "Settings",
